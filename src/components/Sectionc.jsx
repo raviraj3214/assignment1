@@ -1,27 +1,48 @@
 import React from 'react';
+import { motion } from "framer-motion"; // Import Framer Motion
 import styles from './Sectionc.module.css';
-import exercise from '../assets/Images/exercise.jpg'
-import legexercise from '../assets/Images/legexercise.jpg'
-import yoga from '../assets/Images/yoga.jpg'
-import skeleton from '../assets/Images/skeleton.jpg'
+import exercise from '../assets/Images/exercise.jpg';
+import legexercise from '../assets/Images/legexercise.jpg';
+import yoga from '../assets/Images/yoga.jpg';
+import skeleton from '../assets/Images/skeleton.jpg';
+
 const CapnoTrainerFeatures = ({ features = defaultFeatures }) => {
   return (
-    <div className={styles.capnoTrainerContainer}>
+    <motion.div 
+      className={styles.capnoTrainerContainer}
+      initial={{ opacity: 0, y: 50 }} // Start invisible and lower
+      whileInView={{ opacity: 1, y: 0 }} // Fade in and move up
+      transition={{ duration: 1, ease: "easeOut" }} // Smooth animation
+      viewport={{ once: true, amount: 0.2 }} // Trigger once when 20% visible
+    >
       <h1 className={styles.mainTitle}>What Can the CapnoTrainer®GO Do for You?</h1>
+      
       <div className={styles.featuresGrid}>
-        {features.map((feature) => (
-          <div key={feature.id} className={styles.featureCard}>
+        {features.map((feature, index) => (
+          <motion.div 
+            key={feature.id} 
+            className={styles.featureCard}
+            initial={{ opacity: 0, scale: 0.9 }} 
+            whileInView={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 0.5, delay: index * 0.2 }} // Staggered appearance
+            viewport={{ once: true }}
+          >
             <div className={styles.imageContainer}>
-              <img src={feature.image} alt={feature.title} />
+              <motion.img 
+                src={feature.image} 
+                alt={feature.title} 
+                whileHover={{ scale: 1.1 }} // Zoom effect
+                transition={{ duration: 0.3 }}
+              />
             </div>
             <div className={styles.contentContainer}>
               <h2>{feature.title}</h2>
               <p>{feature.description}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
